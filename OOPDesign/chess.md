@@ -1,5 +1,9 @@
 # Design a chess game using OOP
 
+Followup:
+1. how to store the current state on the board
+2. how to determine if the game is won or lost
+
 ```java
 public class ChessPieceTurn {};
 

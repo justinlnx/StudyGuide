@@ -2,6 +2,12 @@
 
 https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048
 
+Optimization(AI):
+minimax search with alpha beta pruning
+- heuristics ensure that all tiles are either increasing or decreasing along both the top/down and left/right direction
+- higher value should be clustered in a corner
+
+
 ```java
 /**
  * Class of individual tile unit in 2048 game. Value of zero implies an empty tile.

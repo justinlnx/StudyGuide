@@ -56,11 +56,72 @@ class Soultion {
 ## Solution 3: use quicksort with partition
 - average O(n)
 - worst case O(n^2)
+
 k-nearest neighbor. 大概就是一个integer array 找最小的k个数。我看过之前的面经有所准备。先说了brute force的先sort一遍然后return前k个 O(nlogn)。然后说我们可以做得更好，keep一个size为k的heap，遍历一遍 O(nlogk)。然后说可以用quick sort partition的形式，先random guess一个k least number（index），针对这个pivot index partition。加入最后这个number end up在index q。如果恰好它最后是第k个index的话 (q=k)就return它前面所有的number。如果q>k的话就partition recursively前面0...q的第k小的。q<k的话就找q..len-1的第k-q小的数。这样amortize runtime奇迹般的是O(n)。然鹅我algo课没好好听并不会证明。最后面试官问我会不会证明的时候我尴尬的一笑说我并不会嘻嘻。不过最后能过也是阿弥陀佛。
 ```java
 class Solution {
-  public List <Integer> findClosestElements(int[] arr, int k, int x) {
-    
+  public List<Integer> findClosestElements(int[] arr, int k, int x) {
+    quickSortDiff(arr, 0, arr.length - 1, x);
+
+    return Arrays.copyOfRange(arr, 0, k + 1);
+  }
+
+  private int partitionDiff(int arr[], int low, int high, int x) {
+    int pivot = Math.abs(x - arr[high]);
+    int i = (low - 1);
+    for (int j = low; j < high; j++) {
+      if (Math.abs(x - arr[j]) < pivot) {
+        i++;
+        int temp = arr[i];
+        arr[j] = arr[i];
+        arr[i] = temp;
+      }
+    }
+
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1;
+  }
+
+  private int quickSortDiff(int arr[], int low, int high, int x) {
+    if (low < high) {
+      int piv = partitionDiff(arr, low, high, x);
+
+      quickSortDiff(arr, low, piv - 1, x);
+      quickSortDiff(arr, piv + 1, high, x);
+    }
+  }
+
+  private int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1); // index of smaller element
+    for (int j = low; j < high; j ++) {
+      if (arr[j] < pivot) {
+        i++;
+        // swap arr[i] and arr[j]
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+    }
+
+    // swap arr[i + 1] and arr[high] (or pivot)
+    int temp = arr[i + 1];
+    arr[i+1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1;
+  }
+
+  private void quickSort(int[] arr, low, high) {
+    if (low < high) {
+      int pi = partition(arr, low, high);
+
+      quickSort(arr, low, pi - 1);
+      quickSort(arr, pi + 1, high);
+    }
   }
 }
 ```
