@@ -28,10 +28,7 @@ class Solution {
         if (lower != null && val <= lower) return false;
         if (upper != null && val >= upper) return false;
         
-        if (!validate(node.right, val, upper)) return false;
-        if (!validate(node.left, lower, val)) return false;
-        
-        return true;
+        return validate(node.right, val, upper) && validate(node.left, lower, val);
     }
 }
 ```

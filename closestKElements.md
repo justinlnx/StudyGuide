@@ -1,4 +1,4 @@
-# Find K Closest Elements
+# Find K Closest Elements LC 28
 
 Given a sorted array, two integers k and x, find the k closest elements to x in the array. The result should also be sorted in ascending order. If there is a tie, the smaller elements are always preferred.
 
@@ -28,7 +28,8 @@ class Solution {
 }
 ```
 
-## Solution 2: use heap, pq of size k+1. O(n logk)
+## Solution 2.1: use heap, pq of size k+1. O(n logk)
+- use this if the given array is not sorted
 - sorting heap of size k + 1 takes logk
 - going thru the array takes n
 ```java
@@ -49,6 +50,30 @@ class Soultion {
 
     pq.poll();
     return pq.toArray();
+  }
+}
+```
+
+## Solution 2.2: use binary search O(log(n-k) + k)
+- the array must be sorted
+- if we want to find the 1 number cloesest to x, we use binary search, use similar idea for k closest
+- `O(log(n -k))` to binary search and find result
+- `O(k)` to create the returned list
+
+```java
+class Solution {
+  public List<Integer> findCloesestElements(int[] arr, int k, int x) {
+    int left = 0, right = arr.length - k;
+    while (left < right) {
+      int mid = (left + right) / 2;
+      if (x - arr[mid] < arr[mid + k] - x) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+
+    return Arrays.stream(arr, left, left + k).boxed().collect(Collectors.toList());
   }
 }
 ```

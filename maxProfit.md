@@ -67,6 +67,20 @@ profit[t][i] = max(profit[t][i-1], max(price[i] – price[j] + profit[t-1][j]))
 Maximum profit gained by selling on ith day. In order to sell shares on ith day, we need to purchase it on any one of [0, i – 1] days. If we buy shares on jth day and sell it on ith day, max profit will be `price[i] – price[j] + profit[t-1][j]` where j varies from 0 to i-1. Here profit[t-1][j] is best we could have done with one less transaction till jth day.
 Below is Dynamic Programming based implementation.
 
+>Price = [10, 22, 5, 75, 65, 80]\
+>K = 2
+
+| Tables        | Transaction 0 | Transaction 1  | Transaction 2  |
+| ------------- |:-------------:| --------------:| --------------:|
+| Day 0         | 0             | 0              | 0              |
+| Day 1         | 0             | (22-10) + 0    | ..             |
+| Day 2         | 0             | ..             | ..             |
+| Day 3         | 0             | ..             | ..             |
+| Day 4         | 0             | ..             | ..             |
+| Day 5         | 0             | ..             | ..             |
+| Day 6         | 0             | ..             | ..             |
+
+
 ## Solution:
 ```java
 class GFG { 
