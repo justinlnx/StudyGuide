@@ -30,8 +30,7 @@ Jumping from one machine to another is expensive. Instead of randomly jumping fr
 
 People are much more likely to be friends with people who live in the same country as them. Rather than randomly dividing people up across machines, try to divvy them up by country, city, state, etc. This will reduce the number of jumps.
 
-*Question: BFS usually requires "marking" a node as visited. How do you do that
-this case?*
+*Question: BFS usually requires "marking" a node as visited. How do you do that this case?*
 
 Usually, in BFS, we mark a node as visited by setting a flag visited in its node class. Here, we don't want to do that (there could be multiple searches going on at the same time, so it's bad to just edit our data). In this case, we could mimic the marking of nodes with a hash table to lookup a node id and whether or not it's been visited.
 
