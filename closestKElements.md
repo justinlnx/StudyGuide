@@ -19,7 +19,7 @@ class Solution {
         // Time complexity: O(nlogn)
         // Space complexity: O(k)
         List<Integer> list = Arrays.stream(arr).boxed().collect(Collectors.toList());
-        Collections.sort(list, (a, b) -> a == b ? a - b : Math.abs(a-x) - Math.abs(b-x));
+        Collections.sort(list, (a, b) -> Math.abs(a-x) - Math.abs(b-x));
         list = list.subList(0, k);
         Collections.sort(list);
 

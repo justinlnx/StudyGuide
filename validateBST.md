@@ -40,3 +40,58 @@ Notes:
   - check the byte size. each char is 2 bytes. but dependends on encoder, size could be different.
 2. javascript, seriazlied json byte size
   - `var byteSize = Buffer.from(JSON.stringify(str)).length;`
+
+## Solution 2: Threaded Binary Search Tree
+The idea of threaded binary trees is to make inorder traversal faster and do it without stack and without recursion. A binary tree is made threaded by making all right child pointers that would normally be NULL point to the inorder successor of the node (if it exists).
+
+
+```java
+/**
+ * Definition for a threaded binary tree node.
+ *  right pointer can point to either the right child node
+ *  or an inorder successor (when node.right is null)
+ *  use rightThread to determine whether if this node has a right child node
+ *  or it has a right thread node
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     bool rightThread;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        Node curr = leftMost(root);
+        bool valid = true;
+        while (curr != null && valid == true) {
+          if (curr.rightThread) {
+            // this node is a thread node, where node.right is null,
+            // then it should go to inorder successor
+            if (curr.val >= curr.right.val) {
+              valid = false;
+              break;
+            }
+            curr = curr.right;
+          } else {
+            // go to the left most child of its right children
+            Node left = leftMost(curr.right);
+            if (curr.val >= left.val) {
+              valid = false;
+              break;
+            }
+            curr = left;
+          }
+        }
+    }
+
+    private Node leftMost(TreeNode node) {
+      if (node == null) return null;
+      Node n = node;
+      while (n.left != null) {
+        n = n.left;
+      }
+      return n;
+    }
+}
+```
