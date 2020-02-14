@@ -218,3 +218,98 @@ class Solution {
 }
 ```
 
+# Example 3: Jump Game - LC 55
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+Each element in the array represents your maximum jump length at that position.
+
+Determine if you are able to reach the last index.
+
+Example 1:
+
+>Input: [2,3,1,1,4]\
+>Output: true\
+>Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+
+Example 2:
+
+>Input: [3,2,1,0,4]\
+>Output: false\
+>Explanation: You will always arrive at index 3 no matter what. Its maximum
+             jump length is 0, which makes it impossible to reach the last index.
+
+`存在性动态规划`
+
+**确认状态**
+
+* 最后一步：如果青蛙能跳到最后一块石头n-1，我们考虑它跳的最后一步
+* 这一步是从石头i跳过来，i<n-1
+* 这需要两个条件同时满足：
+   * 青蛙可以跳到石头i
+   * 最后一步不超过跳跃的最大距离：n-1-i<=ai, ai 是他可以在i跳到的最大距离
+
+子问题：
+* 那么，我们需要知道青蛙能不能跳到石头i，(i<n-1)
+* 而我们原来要求青蛙能不能跳到石头n-1
+* 状态：设f[j]表示青蛙能不能跳到石头j
+
+**转移方程**
+
+* 设f[j]表示青蛙能不能跳到石头j
+>`f[j] = OR 0<=i<j (f[i] AND i + a[i] >= j)`\
+> 青蛙能不能提到石头j = 枚举上一个跳到的石头i，只要有一个i （能不能跳到i and 最后一步的距离不超过ai）
+
+
+**初始条件和边界情况**
+
+* f[0] = true
+
+**计算顺序**
+
+* 设f[j]表示青蛙能不能跳到石头j
+* `f[j] = OR 0<=i<j (f[i] AND i + a[i] >= j)`\
+* init f[0] = true
+* calc: f[1], f[2], ..., f[n-1]
+* answer: f[n-1]
+* Time complexity: O(n^2)
+   * i: 1 + 2 + 3 + ... + (n-1) = n(n-1)/2 = O(n^2)
+* Space complexity: O(n)
+
+## Solution:
+```java
+class Solution {
+  public boolean canJump(int[] nums) {
+    int n = nums.length;
+    boolean[] f = new boolean[n];
+    f[0] = true;
+
+    for (int j = 1; j < n; j ++) {
+      f[j] = false;
+      // previous stone i
+      // last jump is from i to j
+      for (int i = 0; i < j; i ++) {
+        if (f[i] && i + nums[i] >= j) {
+          f[j] = true;
+          break;
+        }
+      }
+    }
+
+    return f[n - 1];
+  }
+}
+```
+
+通常来说, 动态规划的时间复杂度 = 状态数 * 状态转移代价。
+
+# 总结
+四个组成部分
+* 确定状态
+   * 研究最优策略的最后一步
+   * 化为子问题
+* 转移方程
+   * 根据子问题定义直接得到
+* 初始条件和边界情况
+   * 细心，考虑周全
+* 计算顺序
+   * 利用之前的计算结果
