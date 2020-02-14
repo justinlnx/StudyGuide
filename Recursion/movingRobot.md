@@ -17,6 +17,31 @@ Each path can be fully represented by the moves at which we move right. That is,
 Since you must always move right X-1 times, and you have X-1 + Y-1 total steps, you have to pick X-1 times to move right out of X-1+Y-1 choices. Thus, there are C(X-1, X-1+Y-1) paths (e.g., X-1+Y-1 choose X-1):
 >`(X-1 + Y-1)! / ((X-1)! * (Y-1)!)`
 
+## Solution: 
+## Solution
+```java
+// DP
+// O(mn) for time and space
+class Solution {
+  public int uniquePaths(int m, int n) {
+    int[][] f = new int[m][n];
+
+    for (int i = 0; i < m; i ++) { // row: up to down
+      for (int j = 0; j < n; j ++) { // col: left to right
+        if (i == 0 || j == 0) {
+          f[i][j] = 1;
+        } else {
+          f[i][j] = f[i - 1][j] + f[i][j - 1];
+        }
+      }
+    }
+
+    return f[m - 1][n - 1];
+  }
+}
+```
+
+
 ## Part 2 Code: recursive with backtracking
 ```java
 ArrayList<Point> current_path = new ArrayList<Point>();
