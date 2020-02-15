@@ -1,4 +1,4 @@
-# Count numbner of Triangles
+# Count number of Triangles
 Given n points in the plane, find the number of right triangles that can be formed with these points, where the two sides of the right angle are parallel to either the x or y axes
 
 ## Solution

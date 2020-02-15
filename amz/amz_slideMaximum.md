@@ -16,3 +16,27 @@ Window position                Max
  1  3  -1  -3 [5  3  6] 7       6
  1  3  -1  -3  5 [3  6  7]      7
 ```
+
+## Solution
+```java
+class Solution {
+  public int[] maxSlidingWindow(int[] nums, int k) {
+    int len = nums.length;
+    int[] result = new int[len - k + 1];
+    if(nums.length == 0) return new int[0];
+    Queue<Integer> pq = new PriorityQueue<>(len - k + 1, (a, b) -> b - a);
+
+    for(int i = 0; i < k; i ++){
+      pq.add(nums[i]);
+    }
+    result[0] = pq.peek();
+    for(int i = k; i < len; i ++){
+      pq.remove(nums[i - k]);
+      pq.add(nums[i]);
+      result[i - k + 1] = pq.peek();
+    }
+
+    return result;
+  }
+}
+```
