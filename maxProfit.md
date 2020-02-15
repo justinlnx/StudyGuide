@@ -10,14 +10,28 @@ Example:
 ## Solution: 
 ```java
 class Solution {
-    public int maxSubArray(int[] nums) {
-        int sum = nums[0], highest = nums[0];
-        for (int i = 1; i < nums.length; i ++) {
-            sum = sum < 0 ? nums[i] : sum + nums[i];
-            highest = Math.max(highest, sum);
-        }
-        return highest;
+  public int maxSubArray(int[] nums) {
+    int sum = nums[0], highest = nums[0];
+    for (int i = 1; i < nums.length; i ++) {
+      sum = sum < 0 ? nums[i] : sum + nums[i];
+      highest = Math.max(highest, sum);
     }
+    return highest;
+  }
+
+  public int maxSubArray(int[] nums) { // dp
+    if (nums == null || nums.length == 0) return 0;
+    int[] f = new int[nums.length];
+    f[0] = nums[0];
+    int max = nums[0];
+
+    for (int i = 1; i < nums.length; i ++) {
+      f[i] = Math.max(nums[i], nums[i] + f[i - 1]);
+      if (f[i] > max) max = f[i];
+    }
+
+    return max;
+  }
 }
 ```
 
@@ -121,6 +135,23 @@ class GFG {
     }
 
     return profit[k][n - 1];
+  }
+
+  class Solution {
+    public int maxProfit(int[] price, int n, int k) {
+      int[][] dp = new int[k + 1][n + 1];
+      for (int t = 0; t <= k; t ++) {
+        for (int i = 0; i <= n; i ++) {
+          if (i == 0 || t == 0) dp[t][i] = 0;
+          int maxProfit = 0;
+          for (int j = 0; j < i; j ++) {
+            maxProfit = Math.max(maxProfit, price[i] - price[j] + dp[t-1][i]);
+          }
+          dp[t][i] = Math.max(dp[t][i-1], maxProfit);
+        }
+      }
+      return dp[k][n];
+    }
   }
 
   // Driver code  
