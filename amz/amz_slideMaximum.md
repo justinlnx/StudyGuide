@@ -19,6 +19,7 @@ Window position                Max
 
 ## Solution
 ```java
+// pq: O(nlogk)
 class Solution {
   public int[] maxSlidingWindow(int[] nums, int k) {
     int len = nums.length;
@@ -38,5 +39,22 @@ class Solution {
 
     return result;
   }
+}
+
+// two pointer, O(n)
+public int[] maxSlidingWindow(int[] nums, int k) {
+  if (nums == null | nums.length == 0) return new int [0];
+  int[] res = new int[nums.length - k + 1];
+  for (int l = 0; l < nums.length - k + 1; l++) {
+    res[l] = nums[l];
+    int r = l;
+    while (r < l + k) {
+      if (nums[r] > res[l]) {
+        res[l] = nums[r];
+      }
+      r ++;
+    }
+  }
+  return res;
 }
 ```
