@@ -31,8 +31,7 @@ var isIsomorphic = function(s, t) {
     if (!res['t' + t[i]]) {
       res['t' + t[i]] = s[i];
     }
-    console.log(res);
-    if (t[i] != res['s'+s[i]] || s[i] != res['t' + t[i]]) return false;
+    if (t[i] !== res['s' + s[i]] || s[i] !== res['t' + t[i]]) return false;
   }
   return true;
 

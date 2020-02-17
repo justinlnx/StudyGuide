@@ -23,13 +23,13 @@ Example 2:
 var insert = function(intervals, newInterval) {
   if (!intervals || intervals.length === 0) return [newInterval];
   if (!newInterval) return intervals;
-  
+
   const res = [];
   var i = 0;
   // add all intervals that end is before newInterval start
   while(i < intervals.length && intervals[i][1] < newInterval[0]) {
     res.push(intervals[i]);
-    i++
+    i++;
   }
   // merge all overlapping intervals to one
   var intervalToAdd = newInterval;
@@ -41,7 +41,6 @@ var insert = function(intervals, newInterval) {
     i++;
   }
   res.push(intervalToAdd);
-  // add the rest
   
   return [...res, ...intervals.slice(i)];
 };

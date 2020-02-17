@@ -33,7 +33,7 @@ class Solution {
     f[0] = nums[0];
     g[0] = nums[0];
     int max = nums[0];
-    
+
     for (int i = 1; i < nums.length; i ++) {
       g[i] = Math.min(nums[i], Math.min(nums[i] * f[i - 1], nums[i] * g[i - 1]));
       f[i] = Math.max(nums[i], Math.max(nums[i] * f[i - 1], nums[i] * g[i - 1]));
@@ -41,7 +41,7 @@ class Solution {
         max = f[i];
       }
     }
-    
+
     return max;
   }
 }

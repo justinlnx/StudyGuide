@@ -11,11 +11,12 @@ Follow up:
 If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n). 
 
 ## Solution:
+* two pointer
 ```java
 // O(nlogn)
 class Solution {
   public int minimumSize(int[] nums, int s) {
-    if (nums == null) return -1;
+    if (nums == null || nums.length == 0) return 0;
     int sum = 0;
     int ans = Integer.MAX_VALUE;
 
@@ -28,7 +29,7 @@ class Solution {
       }
     }
 
-    return ans == Integer.MAX_VALUE ? -1 : ans;
+    return ans == Integer.MAX_VALUE ? 0 : ans;
   }
 }
 ```

@@ -49,8 +49,7 @@ class Solution {
       return map.get(s);
     }
     
-    Linked
-    List<String> res = new LinkedList<String>();
+    LinkedList<String> res = new LinkedList<String>();
     if (s.length() == 0) {
       res.add("");
       return res;

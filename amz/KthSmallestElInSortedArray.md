@@ -46,3 +46,46 @@ class Tuple implements Comparable<Tuple> {
 	}
 }
 ```
+
+采用二分答案的方式来解决问题。
+我们知道答案一定在 `[minNum,maxNum]` 这个区间内。
+对于某一个数res，我们将其与矩阵中的每一个数作对比，统计比他大的数字的个数，如果个数正好等于k且res在矩阵中则答案为res。
+```java
+public class Solution {
+	/**
+		* @param matrix: List[List[int]]
+		* @param k: a integer
+		* @return: return a integer
+		*/
+	public int kthSmallest(int[][] matrix, int k) {
+		// write your code here
+		int n = matrix.length;
+		int lo = matrix[0][0], hi = matrix[n-1][n-1];
+		while(lo <= hi) {
+			int mid = lo + (hi-lo)/2;
+			int count = binarySearch(matrix, mid, n);
+			if(count >= k)
+				hi = mid - 1;
+			else
+				lo = mid + 1;
+		}
+		return lo;
+	}
+	
+	private int binarySearch(int[][] matrix, int target, int n) {
+		int ret = 0;
+		for(int[] mx : matrix) {
+			int lo = 0, hi = n-1;
+			while(lo <= hi) {
+				int mid = (lo + hi) / 1;
+				if(mx[mid] > target)
+					hi = mid - 1;
+				else
+					lo = mid + 1;
+			}
+			ret += lo;
+		}
+		return ret;
+	}
+}
+```
