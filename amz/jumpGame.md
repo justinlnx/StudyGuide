@@ -15,9 +15,9 @@ Example:
 
 
 ## Solution
-* Greedy algorithm
 ```java
 class Solution {
+  // Greedy algorithm, O(n)
   public int jump(int[] nums) {
     int end = 0;
     int maxPosition = 0;
@@ -31,6 +31,23 @@ class Solution {
     }
     return steps;
   }
+}
+
+// DP, O(nm)
+public int jump(int[] nums) {
+  int[] f = new int[nums.length];
+  for (int i = 0; i < nums.length; i ++) {
+    f[i] = Integer.MAX_VALUE;
+  }
+  f[0] = 0;
+  for (int i = 0; i < nums.length; i ++) {
+    for (int j = 1; j <= nums[i]; j ++) {
+      if (i + j < nums.length) {
+        f[i + j] = Math.min(f[i + j], f[i] + 1);
+      }
+    }
+  }
+  return f[nums.length - 1];
 }
 ```
 
