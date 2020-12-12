@@ -1,4 +1,4 @@
-# Print valid parentheses
+# LC-22 Print valid parentheses
 Implement an algorithm to print all valid (e.g., properly opened and closed) combinations of n-pairs of parentheses.
 
 EXAMPLE:
@@ -15,7 +15,7 @@ So, we simply keep track of the number of left and right parentheses allowed. If
 ## Solution:
 ```java
 public static void printPar(int l, int r, char[] str, int count) {
-  if (l < 0 || r > l) return; // invalid case
+  if (l < 0 || r < l) return; // invalid case
   if (l == 0 && r == 0) {
     System.out.println(str); // found one, print it
   } else {
