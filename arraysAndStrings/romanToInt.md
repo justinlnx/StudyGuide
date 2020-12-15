@@ -53,7 +53,7 @@ Example 5:
  * @return {number}
  */
 var romanToInt = function(s) {
-    const lut = {
+    const symbols = {
         'I': 1,
         'V': 5,
         'X': 10,
