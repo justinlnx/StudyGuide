@@ -17,15 +17,16 @@ class Solution {
         int length = nums.length;
         int[] res = new int[length];
         
-        res[0] = 1;
+        res[0] = 1; // res[] represents the product of all previous elements up to i, from left->right
         for (int i = 1; i < length; i ++) {
+            // res[i] is product of res at [i-1] * nums[i-1]
             res[i] = nums[i - 1] * res[i - 1];
         }
         
-        int R = 1;
+        int R = 1; // R represends the product of all the number after i, from right->left
         for (int i = length - 1; i >= 0; i --) {
-            res[i] = res[i] * R;
-            R *= nums[i];
+            res[i] = res[i] * R; // update res[i] with R, product all numbers to the right
+            R *= nums[i]; // update product of all nums to the right by * current number
         }
         
         return res;
